@@ -4,5 +4,6 @@ module.exports = {
     server: {
         PORT: 8080
     },
-    redis: secret.redis
+    redis: secret.redis,
+    jwt: secret.jwt
 }
