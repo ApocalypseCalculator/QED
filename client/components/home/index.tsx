@@ -5,7 +5,8 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -16,6 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export const Home = (): JSX.Element => {
+    const nav: NavigateFunction = useNavigate();
     return (
         <>
             {/* <Box sx={{ flexGrow: 1, padding: "1em" }}>
@@ -48,6 +50,11 @@ export const Home = (): JSX.Element => {
                 </p> */}
 
                 <img src="/static/img/learning-1.jpg" width="100%"></img>
+                <Button 
+                    variant="contained" 
+                    sx={{marginTop: "2em", marginBottom: "2em"}} 
+                    onClick={() => nav("/register")}
+                >Get started now!</Button>
             </div>
             {/* </Box> */}
         </>
