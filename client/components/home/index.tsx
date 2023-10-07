@@ -40,7 +40,7 @@ export const Home = (): JSX.Element => {
             <div className="jumbotron" style={{padding: "1em"}}>
                 <h2 className="display-4">Wanna learn something?</h2>
                 <h1 className="display-1">Meet <strong>QED</strong></h1>
-                <h2 className="display-3">It's already been proven.</h2>
+                <h2 className="display-3"><em>It's already been proven.</em></h2>
 
                 {/* <p className="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
                 <hr className="my-4" />
@@ -49,7 +49,7 @@ export const Home = (): JSX.Element => {
                     <a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
                 </p> */}
 
-                <img src="/static/img/learning-1.jpg" width="100%"></img>
+                <img src="/static/img/learning-1.jpg" width="90%" style={{margin: "1em"}}></img>
                 <Button 
                     variant="contained" 
                     sx={{marginTop: "2em", marginBottom: "2em"}} 
