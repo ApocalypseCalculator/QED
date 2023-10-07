@@ -7,6 +7,13 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Button, TextField, Typography } from "@mui/material";
 
+import { useForm, SubmitHandler } from "react-hook-form";
+
+type RegisterInputs = {
+    username: string;
+    password: string;
+}
+
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -16,42 +23,58 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export const Register = (): JSX.Element => {
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm<RegisterInputs>()
+    const onSubmit: SubmitHandler<RegisterInputs> = (data: RegisterInputs) => {
+        console.log(data);
+    }
+
     return (
         <>
             <Box sx={{ flexGrow: 1, padding: "1em" }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Item>
-                            <div style={{padding: "0.5em"}}>
-                                <Typography variant="h5" textAlign="left">
-                                    Create a new account:
-                                </Typography>
-                                <Box
-                                    component="form"
-                                    flexDirection="column"
-                                    sx={{
-                                        '& .MuiTextField-root': { m: 1, width: '25ch' },
-                                    }}
-                                    noValidate
-                                    autoComplete="off"
-                                    marginTop="1em"
-                                >
-                                    <div style={{ display: "flex", flexDirection: "column", alignItems: "baseline" }}>
-                                        <TextField
-                                            required
-                                            id="username"
-                                            label="Username"
-                                        />
-                                        <TextField
-                                            id="password"
-                                            label="Password"
-                                            type="password"
-                                            autoComplete="current-password"
-                                        />
-                                        <Button variant="outlined" style={{width: "100px"}}>Register!</Button>
-                                    </div>
-                                </Box>
-                            </div>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <div style={{padding: "0.5em"}}>
+                                    <Typography variant="h5" textAlign="left">
+                                        Create a new account:
+                                    </Typography>
+                                    <Box
+                                        component="div"
+                                        flexDirection="column"
+                                        sx={{
+                                            '& .MuiTextField-root': { m: 1, width: '25ch' },
+                                        }}
+                                        marginTop="1em"
+                                    >
+                                        <div style={{ display: "flex", flexDirection: "column", alignItems: "baseline" }}>
+                                            <TextField
+                                                required
+                                                id="username"
+                                                label="Username"
+                                                {...register("username")}
+                                            />
+                                            <TextField
+                                                id="password"
+                                                label="Password"
+                                                type="password"
+                                                autoComplete="current-password"
+                                                {...register("password")}
+                                            />
+                                            <Button 
+                                                variant="outlined" 
+                                                type="submit" 
+                                                style={{width: "100px"}}
+                                            >Register!</Button>
+                                        </div>
+                                    </Box>
+                                </div>
+                            </form>
                         </Item>
                     </Grid>
                 </Grid>
