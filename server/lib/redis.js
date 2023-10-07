@@ -13,7 +13,9 @@ redisclient.on('error', (err) => {
     console.log(err);
 });
 
-const userSchema = new Schema('user', {
+let schemas = {};
+
+schemas.user = new Schema('user', {
     username: { type: 'string' },
     firstname: { type: 'string' },
     lastname: { type: 'string' },
@@ -25,12 +27,31 @@ const userSchema = new Schema('user', {
     dataStructure: "JSON"
 });
 
+//key this by corresponding user id (student profile)
+schemas.sprofile = new Schema('sprofile', {
+    topics: {type: 'string[]'}
+}, {
+    dataStructure: "JSON"
+});
+
+//key this by corresponding user id (teacher profile)
+schemas.tprofile = new Schema('tprofile', {
+    topics: {type: 'string[]'},
+    
+}, {
+    dataStructure: "JSON"
+});
+
 let repos = {};
 
 redisclient.on('ready', () => {
     console.log('Redis initialized!');
-    repos.user = new Repository(userSchema, redisclient);
-    repos.user.createIndex();
+
+    for(let skey in schemas) {
+        repos[skey] = new Repository(schemas[skey], redisclient);
+        repos[skey].createIndex();
+    }
+
     console.log('Schema repositories loaded!');
 })
 
