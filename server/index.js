@@ -2,11 +2,22 @@
 process.env.NODE_ENV = "production";
 
 const express = require("express");
+const redis = require('redis');
 const fs = require('fs');
+const config = require('./config');
 const path = require('path');
 
+const redisclient = redis.createClient({
+    url: config.redis
+});
+redisclient.on('error', (err) => {
+    console.log('uh oh: a fucky wucky has appeared');
+    console.log(err);
+});
+
+redisclient.connect();
+
 const app = express();
-const PORT = 8080;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ strict: true }));
@@ -18,7 +29,7 @@ app.use('/site/files', express.static('static'));
 var endpoints = {};
 fs.readdirSync("./endpoints/").forEach(function (file) {
     let m = require("./endpoints/" + file);
-    if (m.name == null || m.execute == null || m.method == null) {
+    if (m.name == null || m.execute == null || m.method == null || m.dbrequired == null) {
         console.error(`\x1b[31mInvalid endpoint: ${file}\x1b[0m`);
     } else if (m.name in endpoints && endpoints[m.name] == m.method) {
         console.error(
@@ -27,9 +38,12 @@ fs.readdirSync("./endpoints/").forEach(function (file) {
     } else {
         endpoints[m.name] = m.method;
         app[m.method.toLowerCase()](m.name, (req, res, next) => {
-            if (m.verify(req, res, next)) {
+            if (m.dbrequired && !redisclient.isReady) {
+                return res.status(500).json({ status: 500, error: 'Internal database error' });
+            }
+            if (m.verify(req, res, next, redisclient)) {
                 try {
-                    m.execute(req, res, next);
+                    m.execute(req, res, next, redisclient);
                 }
                 catch {
                     res.status(500).json({ status: 500, error: 'Internal server error' });
@@ -48,9 +62,17 @@ fs.readdirSync("./endpoints/").forEach(function (file) {
 
 app.use('/', function (req, res) {
     //res.sendFile(path.join(__dirname + `/client/dist/index.html`));
-    res.status(400).json({"ur_bad": true})
+    res.status(400).json({ "ur_bad": true })
 })
 
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+const server = app.listen(config.server.PORT, () => {
+    console.log(`Server listening on port ${config.server.PORT}`);
+});
+
+//graceful shutdown :)
+process.on('SIGTERM', () => {
+    server.close(() => {
+        console.log('Closed server');
+    });
+    redisclient.quit();
 });
