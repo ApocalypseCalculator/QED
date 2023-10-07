@@ -2,12 +2,12 @@
 process.env.NODE_ENV = "production";
 
 const express = require("express");
-const redis = require('redis');
+const { createClient } = require('redis');
 const fs = require('fs');
 const config = require('./config');
 const path = require('path');
 
-const redisclient = redis.createClient({
+const redisclient = createClient({
     url: config.redis
 });
 redisclient.on('error', (err) => {
