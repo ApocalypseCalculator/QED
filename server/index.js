@@ -2,20 +2,10 @@
 process.env.NODE_ENV = "production";
 
 const express = require("express");
-const { createClient } = require('redis');
 const fs = require('fs');
 const config = require('./config');
 const path = require('path');
-
-const redisclient = createClient({
-    url: config.redis
-});
-redisclient.on('error', (err) => {
-    console.log('uh oh: a fucky wucky has appeared');
-    console.log(err);
-});
-
-redisclient.connect();
+const redis = require('./lib/redis');
 
 const app = express();
 
@@ -25,6 +15,13 @@ app.enable('trust proxy');
 app.disable('x-powered-by');
 
 app.use('/site/files', express.static('static'));
+
+app.use((error, req, res, next) => {
+    if (error instanceof SyntaxError)
+        res.status(400).send('Syntax error');
+    else 
+        next();
+});
 
 var endpoints = {};
 fs.readdirSync("./endpoints/").forEach(function (file) {
@@ -38,12 +35,12 @@ fs.readdirSync("./endpoints/").forEach(function (file) {
     } else {
         endpoints[m.name] = m.method;
         app[m.method.toLowerCase()](m.name, (req, res, next) => {
-            if (m.dbrequired && !redisclient.isReady) {
+            if (m.dbrequired && !redis.client.isReady) {
                 return res.status(500).json({ status: 500, error: 'Internal database error' });
             }
-            if (m.verify(req, res, next, redisclient)) {
+            if (m.verify(req, res, next, redis)) {
                 try {
-                    m.execute(req, res, next, redisclient);
+                    m.execute(req, res, next, redis);
                 }
                 catch {
                     res.status(500).json({ status: 500, error: 'Internal server error' });
@@ -63,7 +60,7 @@ fs.readdirSync("./endpoints/").forEach(function (file) {
 app.use('/', function (req, res) {
     //res.sendFile(path.join(__dirname + `/client/dist/index.html`));
     res.status(400).json({ "ur_bad": true })
-})
+});
 
 const server = app.listen(config.server.PORT, () => {
     console.log(`Server listening on port ${config.server.PORT}`);
@@ -74,5 +71,4 @@ process.on('SIGTERM', () => {
     server.close(() => {
         console.log('Closed server');
     });
-    redisclient.quit();
 });
