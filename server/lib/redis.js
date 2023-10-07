@@ -29,15 +29,27 @@ schemas.user = new Schema('user', {
 
 //key this by corresponding user id (student profile)
 schemas.sprofile = new Schema('sprofile', {
-    topics: {type: 'string[]'}
+    bio: {type: 'string'},
+    topics: {type: 'string[]'},
+    ongoingtargets: {type: 'string[]', path: '$.ongoing[*].target'},
+    ongoingtopic: {type: 'string[]', path: '$.ongoing[*].topic'},
+    ongoinglocation: {type: 'number[]', path: '$.ongoing[*].location'}, // 0 is online, 1 is hybrid, 2 is in person
+    ongoingpaid: {type: 'number[]', path: '$.ongoing[*].paid'}, //true or false
+    ongoingstart: {type: 'number[]', path: '$.ongoing[*].starttime'},
 }, {
     dataStructure: "JSON"
 });
 
 //key this by corresponding user id (teacher profile)
 schemas.tprofile = new Schema('tprofile', {
-    topics: {type: 'string[]'},
-    
+    bio: {type: 'string'},
+    topicname: {type: 'string[]', path: '$.topics[*].name'},
+    proficiency: {type: 'number[]', path: '$.topics[*].skill'}, //this should be on a scale of 1 to 10
+    ongoingtargets: {type: 'string[]', path: '$.ongoing[*].target'},
+    ongoingtopic: {type: 'string[]', path: '$.ongoing[*].topic'},
+    ongoinglocation: {type: 'number[]', path: '$.ongoing[*].location'}, // 0 is online, 1 is hybrid, 2 is in person
+    ongoingpaid: {type: 'number[]', path: '$.ongoing[*].paid'}, //true or false
+    ongoingstart: {type: 'number[]', path: '$.ongoing[*].starttime'},
 }, {
     dataStructure: "JSON"
 });
