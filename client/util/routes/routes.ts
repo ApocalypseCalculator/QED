@@ -1,4 +1,4 @@
-let BASEURL = "/"
+let BASEURL = ""
 let Routes = {
     AUTH: {
         LOGIN: `${BASEURL}/api/login`,
