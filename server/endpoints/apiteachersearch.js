@@ -1,4 +1,5 @@
 const auth = require('../lib/auth');
+const { EntityId } = require('redis-om');
 
 module.exports.name = "/api/teacher/search";
 module.exports.method = "GET";
@@ -17,7 +18,21 @@ module.exports.execute = async function (req, res, next, clients) {
             if (sprofsearch.topics.length != 0) {
                 // this is inefficient but there isn't much time to implement something more efficient /shrug
                 let resultlist = await clients.repositories.tprofile.search().return.all(); //.where('topicname').containsOneOf(sprofsearch.topics) throws error
-                res.json(sortresult(resultlist, sprofsearch.topics, user));
+                resultlist.map(e => {
+                    e.userid = e[EntityId];
+                    return e;
+                })
+                let sortedlist = sortresult(resultlist, sprofsearch.topics, user);
+                for (let i = 0; i < sortedlist.length; i++) {
+                    let usrsearch = await clients.repositories.user.fetch(sortedlist[i].userid);
+                    sortedlist[i].username = usrsearch.username;
+                    sortedlist[i].firstname = usrsearch.firstname;
+                    sortedlist[i].lastname = usrsearch.lastname;
+                    sortedlist[i].age = usrsearch.age;
+                    sortedlist[i].location = usrsearch.location;
+                    sortedlist[i].registertime = usrsearch.registertime;
+                }
+                res.json(sortedlist);
             }
             else {
                 return res.status(401).send({ status: 401, error: "You do not have any topics you've expressed interest in!" });
