@@ -1,7 +1,7 @@
 const config = require('../config');
 const jwt = require('jsonwebtoken');
 
-module.exports = function (req, res) {
+module.exports = function (req) {
     return new Promise((resolve, reject) => {
         if (req.headers.authorization && req.headers.authorization.split(' ').length == 2) {
             let token = req.headers.authorization.split(' ')[1];
