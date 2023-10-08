@@ -6,7 +6,7 @@ import { LearnerProfile, Mentorship } from "../../../util/models";
 import Routes from "../../../util/routes/routes";
 
 export const StudentResult = ({ mentorship, ongoing }: { mentorship: Mentorship, ongoing: boolean }): JSX.Element => {
-    return (
+    return (ongoing !== (mentorship.starttime === 0)) ? (
         <Box sx={{ backgroundColor: "lightgray", margin: "1em", padding: "1em" }}>
             <Typography variant="h5">{`${mentorship.target.firstname} ${mentorship.target.lastname}`}</Typography>
             <Typography variant="h6">Wants to learn: <strong>{mentorship.topic}</strong></Typography>
@@ -34,5 +34,5 @@ export const StudentResult = ({ mentorship, ongoing }: { mentorship: Mentorship,
                 }}>Reject Request</Button>
             </div>
         </Box>
-    );
+    ) : <></>;
 }
