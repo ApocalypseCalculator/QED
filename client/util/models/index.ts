@@ -2,24 +2,36 @@ export enum LocationType {
     ONLINE, HYBRID, IN_PERSON
 }
 
-type User = {
+export type User = {
     firstname: string;
     lastname: string;
     age: number;
     location: string;
+}
 
+export type RegisterInputs = User & {
+    username: string;
+    password: string;
+}
+
+type ProfileInputs = {
     bio: string;
 }
 
-export type LearnerProfileInputs = User;
+export type LearnerProfileInputs = ProfileInputs;
+export type MentorProfileInputs = ProfileInputs;
 
-export type LearnerProfile = LearnerProfileInputs & {
+export type LearnerProfile = User & {
+    bio: string;
     topics: Array<string>;
     ongoing: Array<Mentorship>;
+    userid: string;
 }
 
 export type MentorProfile = User & {
-    topics: Array<Teachable>
+    bio: string;
+    topics: Array<Teachable>;
+    userid: string;
 }
 
 export type Teachable = {

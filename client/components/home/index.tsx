@@ -18,6 +18,11 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export const Home = (): JSX.Element => {
     const nav: NavigateFunction = useNavigate();
+
+    React.useEffect(() => {
+        document.title = "About Us | QED";
+    }, []);
+
     return (
         <>
             {/* <Box sx={{ flexGrow: 1, padding: "1em" }}>

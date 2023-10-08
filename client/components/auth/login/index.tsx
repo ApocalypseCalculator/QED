@@ -5,9 +5,19 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, InputAdornment, TextField, Typography } from "@mui/material";
+// import { login } from "../../../util/services/auth"
 
 import { useForm, SubmitHandler } from "react-hook-form";
+
+import BadgeIcon from '@mui/icons-material/Badge';
+import LockIcon from '@mui/icons-material/Lock';
+import { Session, SessionContext } from "../../../util/session";
+import Routes from "../../../util/routes/routes";
+import { User } from "../../../util/models";
+
+import jwt_decode from "jwt-decode";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 
 type LoginInputs = {
     username: string;
@@ -23,6 +33,14 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export const Login = (): JSX.Element => {
+    const session: Session = React.useContext(SessionContext);
+    const nav: NavigateFunction = useNavigate();
+
+    React.useEffect(() => {
+        if (session.loggedIn()) nav("/learner");
+        else document.title = "Login | QED";
+    }, []);
+
     const {
         register,
         handleSubmit,
@@ -30,7 +48,26 @@ export const Login = (): JSX.Element => {
         formState: { errors },
     } = useForm<LoginInputs>()
     const onSubmit: SubmitHandler<LoginInputs> = (data: LoginInputs) => {
-        console.log(data);
+        login(data.username, data.password);
+    }
+
+    const login = (username: string, password: string): void => {
+        axios.post(`${Routes.AUTH.LOGIN}`, {
+            username: username,
+            password: password
+        }).then((res) => {
+            console.log("Token:", res.data);
+            localStorage.setItem("token", res.data.token);
+            session.setToken(res.data.token);
+
+            const decodedUser: User = jwt_decode(res.data.token);
+            session.setUser(decodedUser);
+
+            nav('/learner');
+            session.notify("Successfully logged in!", "success");
+        }).catch((err) => {
+            console.error("Error occurred while logging in:", err);
+        });
     }
 
     return (
@@ -58,6 +95,13 @@ export const Login = (): JSX.Element => {
                                                 label="Username"
                                                 sx={{ backgroundColor: "white" }}
                                                 {...register("username")}
+                                                InputProps={{
+                                                    startAdornment: (
+                                                        <InputAdornment position="start">
+                                                            <BadgeIcon />
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
                                             />
                                             <TextField
                                                 id="password"
@@ -66,6 +110,13 @@ export const Login = (): JSX.Element => {
                                                 autoComplete="current-password"
                                                 sx={{ backgroundColor: "white" }}
                                                 {...register("password")}
+                                                InputProps={{
+                                                    startAdornment: (
+                                                        <InputAdornment position="start">
+                                                            <LockIcon />
+                                                        </InputAdornment>
+                                                    ),
+                                                }}
                                             />
                                             <Button
                                                 variant="outlined"

@@ -1,8 +1,19 @@
-let BASEURL = "http://localhost:8000"
+let BASEURL = "http://10.76.0.16:8080"
 let Routes = {
-    GRADES: {
-        ALL: `${BASEURL}/grades/all`,
-        NEW: `${BASEURL}/grades/new`
+    AUTH: {
+        LOGIN: `${BASEURL}/api/login`,
+        REGISTER: `${BASEURL}/api/register`,
+    },
+    STUDENT: {
+        PUT: `${BASEURL}/api/profile/student/put`,
+        GET: `${BASEURL}/api/profile/student/get`,
+    },
+    TEACHER: {
+        PUT: `${BASEURL}/api/profile/teacher/put`,
+        GET: `${BASEURL}/api/profile/teacher/get`,
+        SEARCH: `${BASEURL}/api/teacher/search`,
+        REQUEST: `${BASEURL}/api/teacher/request`,
+        HANDLEREQ: `${BASEURL}/api/teacher/handlereq`,
     }
 };
 

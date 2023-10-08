@@ -6,11 +6,14 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import { Link, NavigateFunction, useNavigate } from 'react-router-dom';
+import { Session, SessionContext } from "../../util/session";
 
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { User } from '../../util/models';
 
 export default function ButtonAppBar() {
     const nav: NavigateFunction = useNavigate();
+    const session: Session = React.useContext(SessionContext);
     return (
         <Box sx={{ flexGrow: 1, display: "flex" }}>
             <AppBar position="static" sx={{ backgroundColor: "purple" }}>
@@ -38,13 +41,19 @@ export default function ButtonAppBar() {
                             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                                 <Link to="/mentor" style={{ textDecoration: "none", color: "white" }}>Mentor Home</Link>
                             </Typography>
-                            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                <Link to="/news" style={{ textDecoration: "none", color: "white" }}>News</Link>
-                            </Typography>
                         </div>
                         <div style={{ display: "flex", flexDirection: "row", gap: "1em", marginRight: "1.5em" }}>
-                            <Button color="inherit" onClick={() => nav("/login")}>Login</Button>
-                            <Button color="inherit" onClick={() => nav("/register")}>Register</Button>
+                            {!!session.token ?
+                                <>
+                                    <Button color="inherit" onClick={() => {
+                                        localStorage.removeItem("token"); session.setToken(""); session.setUser({} as User);
+                                        nav("/login");
+                                    }}>Hello, {session.user.firstname}!</Button>
+                                </> :
+                                <>
+                                    <Button color="inherit" onClick={() => nav("/login")}>Login</Button>
+                                    <Button color="inherit" onClick={() => nav("/register")}>Register</Button>
+                                </>}
                         </div>
                     </div>
                 </Toolbar>
