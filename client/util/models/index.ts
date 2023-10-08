@@ -47,7 +47,9 @@ export type Teachable = {
 }
 
 export type Mentorship = {
-    target: string;
+    target: User & {
+        userid: string;
+    };
     topic: string;
     location: LocationType;
     paid: boolean;

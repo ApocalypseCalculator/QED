@@ -16,7 +16,7 @@ const getProficiency = (profile: MentorProfile, topic: string): number => {
 }
 
 export const MentorResult = ({ profile, ongoing }: { profile: MentorProfile, ongoing: boolean }): JSX.Element => {
-    return (ongoing !== ("ongoing" in profile && profile.ongoing.starttime === 0)) ? (
+    return (!ongoing !== ("ongoing" in profile)) ? (
         <Box sx={{ backgroundColor: "lightgray", margin: "1em", padding: "1em" }}>
             <Typography variant="h5"><strong>{`${profile.firstname} ${profile.lastname}`}</strong></Typography>
             {profile.topics.map((topic: Teachable, idx: number): JSX.Element => {

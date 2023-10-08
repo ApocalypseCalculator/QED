@@ -9,7 +9,7 @@ import { Button, Typography } from "@mui/material";
 
 import SchoolIcon from '@mui/icons-material/School';
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { LearnerProfile } from "../../util/models";
+import { LearnerProfile, Mentorship } from "../../util/models";
 import { StudentResult } from "./studentResult";
 import Routes from "../../util/routes/routes";
 import { Session, SessionContext } from "../../util/session";
@@ -25,11 +25,12 @@ const Item = styled(Paper)(({ theme }) => ({
 export const MentorHome = (): JSX.Element => {
     const nav: NavigateFunction = useNavigate();
     const session: Session = React.useContext(SessionContext);
-    const [interestedStudents, setInterestedStudents] = React.useState<Array<LearnerProfile>>([]);
+    const [interestedStudents, setInterestedStudents] = React.useState<Array<Mentorship>>([]);
 
     React.useEffect(() => {
         axios.get(`${Routes.TEACHER.GET}?self=true`).then((res) => {
             console.log("Success get teacher:", res.data);
+            setInterestedStudents(res.data.ongoing);
         }).catch((err) => {
             session.notify(`Error: ${err.response.data.error}`, "error");
         });
@@ -56,8 +57,8 @@ export const MentorHome = (): JSX.Element => {
                                 :
                                 <Typography variant="h6">Still waiting for student responders. Check back in a bit!</Typography>}
 
-                            {interestedStudents.map((profile: LearnerProfile): JSX.Element => {
-                                return <StudentResult profile={profile} topic="" />;
+                            {interestedStudents.map((mentorship: Mentorship): JSX.Element => {
+                                return <StudentResult mentorship={mentorship} ongoing={false} />;
                             })}
                         </Item>
                     </Grid>
@@ -65,8 +66,8 @@ export const MentorHome = (): JSX.Element => {
                         <Item sx={{ padding: "2em" }}>
                             <Typography variant="h5">No Ongoing Mentorships Yet.</Typography>
                             {/* <Typography variant="h5">Ongoing Mentorships:</Typography> */}
-                            {interestedStudents.map((profile: LearnerProfile): JSX.Element => {
-                                return <StudentResult profile={profile} topic="" />;
+                            {interestedStudents.map((mentorship: Mentorship): JSX.Element => {
+                                return <StudentResult mentorship={mentorship} ongoing={true} />;
                             })}
                         </Item>
                     </Grid>
