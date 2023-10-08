@@ -20,7 +20,7 @@ app.use('/site/files', express.static('static'));
 app.use((error, req, res, next) => {
     if (error instanceof SyntaxError)
         res.status(400).send('Syntax error');
-    else 
+    else
         next();
 });
 
@@ -56,11 +56,15 @@ fs.readdirSync("./endpoints/").forEach(function (file) {
 });
 
 //add once frontend is done
-//app.use(express.static('./client/dist', { extensions: ["html"] }));
+app.use(express.static('../client/build', { extensions: ["html"] }));
 
 app.use('/', function (req, res) {
-    //res.sendFile(path.join(__dirname + `/client/dist/index.html`));
-    res.status(400).json({ "ur_bad": true })
+    if (req.method == "GET") {
+        res.sendFile(path.join(__dirname + `/../client/build/index.html`));
+    }
+    else {
+        res.status(400).json({ "ur_bad": true })
+    }
 });
 
 const server = app.listen(config.server.PORT, () => {
