@@ -7,6 +7,7 @@ import { ThemeProvider } from "@mui/material";
 import { textTheme } from "../../util/misc/theme";
 import { Register } from "../auth/register";
 import { Login } from "../auth/login";
+import { LearnerHome } from "../auth/learner";
 
 const _App = (): React.JSX.Element => {
     return (
@@ -14,6 +15,8 @@ const _App = (): React.JSX.Element => {
             <ButtonAppBar />
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/learner" element={<LearnerHome />} />
+
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
             </Routes>

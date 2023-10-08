@@ -18,7 +18,7 @@ const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
     padding: theme.spacing(1),
-    textAlign: 'center',
+    textAlign: 'left',
     color: theme.palette.text.secondary,
 }));
 
@@ -40,7 +40,7 @@ export const Register = (): JSX.Element => {
                     <Grid item xs={12}>
                         <Item>
                             <form onSubmit={handleSubmit(onSubmit)}>
-                                <div style={{padding: "0.5em"}}>
+                                <div style={{ padding: "0.5em", backgroundImage: "url('/static/img/learning-1.jpg')", height: "360px" }}>
                                     <Typography variant="h5" textAlign="left">
                                         Create a new account:
                                     </Typography>
@@ -57,6 +57,7 @@ export const Register = (): JSX.Element => {
                                                 required
                                                 id="username"
                                                 label="Username"
+                                                sx={{ backgroundColor: "white" }}
                                                 {...register("username")}
                                             />
                                             <TextField
@@ -64,12 +65,14 @@ export const Register = (): JSX.Element => {
                                                 label="Password"
                                                 type="password"
                                                 autoComplete="current-password"
+                                                sx={{ backgroundColor: "white" }}
                                                 {...register("password")}
                                             />
-                                            <Button 
-                                                variant="outlined" 
-                                                type="submit" 
-                                                style={{width: "100px"}}
+                                            <Button
+                                                variant="outlined"
+                                                type="submit"
+                                                style={{ width: "100px" }}
+                                                sx={{ backgroundColor: "white" }}
                                             >Register!</Button>
                                         </div>
                                     </Box>
