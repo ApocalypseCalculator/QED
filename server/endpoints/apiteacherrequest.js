@@ -16,7 +16,7 @@ module.exports.execute = async function (req, res, next, clients) {
                 if (tprofsearch.topics.filter(e => (e.name === req.body.topic)).length == 0) {
                     return res.status(403).send({ status: 403, error: "This mentor does not teach this topic" });
                 }
-                else if (tprofsearch.ongoing.filter(e => (e.target === user.userid && e.starttime == 0)).length != 0) {
+                else if (tprofsearch.ongoing && tprofsearch.ongoing.filter(e => (e.target === user.userid && e.starttime == 0)).length != 0) {
                     return res.status(401).send({ status: 401, error: "You already have a pending request" });
                 }
                 else if (sprofsearch && sprofsearch.bio) {
@@ -25,7 +25,7 @@ module.exports.execute = async function (req, res, next, clients) {
                         target: req.body.target,
                         topic: req.body.topic,
                         location: ([0, 1, 2].includes(req.body.location)) ? 0 : req.body.location,
-                        paid: !!req.body.paid,
+                        paid: req.body.paid ? 1 : 0,
                         starttime: 0
                     }
                     if (!sprofsearch.ongoing) {
@@ -48,7 +48,7 @@ module.exports.execute = async function (req, res, next, clients) {
                                 }
                             });
                         }).catch(() => res.status(500).json({ error: "Internal server error" }));
-                    }).catch(() => res.status(500).json({ error: "Internal server error" }));
+                    }).catch((err) => res.status(500).json({ error: "Internal server error" }));
                 }
                 else {
                     return res.status(401).send({ status: 401, error: "You do not have a learner profile set up" });
