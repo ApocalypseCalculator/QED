@@ -1,4 +1,5 @@
 const auth = require('../lib/auth');
+const { EntityId } = require('redis-om');
 
 module.exports.name = "/api/profile/teacher/get";
 module.exports.method = "GET";
@@ -22,6 +23,20 @@ module.exports.execute = async function (req, res, next, clients) {
         if(querytarget) {
             let tprofsearch = await clients.repositories.tprofile.fetch(querytarget);
             if(tprofsearch && tprofsearch.bio) {
+                if(req.query.self && tprofsearch.ongoing) {
+                    for(let i = 0; i < tprofsearch.ongoing.length; i++) {
+                        let usrsearch = await clients.repositories.user.fetch(tprofsearch.ongoing[i].target);
+                        tprofsearch.ongoing[i].target = {
+                            username: usrsearch.username,
+                            firstname: usrsearch.firstname,
+                            lastname: usrsearch.lastname,
+                            age: usrsearch.age,
+                            location: usrsearch.location,
+                            registertime: usrsearch.registertime,
+                            userid: usrsearch[EntityId]
+                        }
+                    }
+                }
                 res.send(tprofsearch);
             }
             else {
