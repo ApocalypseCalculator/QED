@@ -30,7 +30,7 @@ module.exports.execute = async function (req, res, next, clients) {
                             age: usrsearch.age,
                             location: usrsearch.location,
                             registertime: usrsearch.registertime,
-                            id: usrsearch[EntityId]
+                            userid: usrsearch[EntityId]
                         }, config.jwt);
                         res.json({ token: token });
                     }
