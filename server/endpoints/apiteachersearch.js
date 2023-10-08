@@ -21,7 +21,8 @@ module.exports.execute = async function (req, res, next, clients) {
                 resultlist.map(e => {
                     e.userid = e[EntityId];
                     return e;
-                })
+                });
+                resultlist = resultlist.filter(e => (e.userid !== user.userid));
                 let sortedlist = sortresult(resultlist, sprofsearch.topics, user);
                 for (let i = 0; i < sortedlist.length; i++) {
                     let usrsearch = await clients.repositories.user.fetch(sortedlist[i].userid);
