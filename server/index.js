@@ -9,7 +9,8 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(cors());
+//uncomment below when in testing
+//app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ strict: true }));
 app.enable('trust proxy');
