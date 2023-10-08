@@ -1,7 +1,3 @@
-const config = require('../config')
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { EntityId } = require('redis-om');
 const auth = require('../lib/auth');
 
 module.exports.name = "/api/teacher/search";
@@ -11,6 +7,7 @@ module.exports.verify = function (req, res, next, clients) {
     return true;
 }
 
+//note: this search function is kinda bad, do not use if you have a large database TwT
 module.exports.execute = async function (req, res, next, clients) {
     auth(req).then(async (user) => {
         let sprofsearch = await clients.repositories.sprofile.fetch(user.userid);
