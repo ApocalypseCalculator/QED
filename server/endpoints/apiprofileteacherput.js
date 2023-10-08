@@ -29,6 +29,7 @@ module.exports.execute = async function (req, res, next, clients) {
             clients.repositories.tprofile.save(user.userid, (tprofsearch && tprofsearch.bio) ?
                 tprofsearch : {
                     bio: req.body.bio,
+                    location: tprofsearch.location,
                     topics: filteredtopics
                 }).then((newtprofile) => {
                     res.json({ message: "great success", data: newtprofile });

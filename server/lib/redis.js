@@ -43,6 +43,7 @@ schemas.sprofile = new Schema('sprofile', {
 //key this by corresponding user id (teacher profile)
 schemas.tprofile = new Schema('tprofile', {
     bio: {type: 'string'},
+    location: {type: 'string'},
     topicname: {type: 'string[]', path: '$.topics[*].name'},
     proficiency: {type: 'number[]', path: '$.topics[*].skill'}, //this should be on a scale of 1 to 10
     ongoingtargets: {type: 'string[]', path: '$.ongoing[*].target'},
