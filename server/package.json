@@ -1,4 +1,25 @@
 {
+  "name": "QED",
+  "version": "1.0.0",
+  "description": "It's already been proven",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd ../client && npx vite build && cd ../server && node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ApocalypseCalculator/QED.git"
+  },
+  "author": "ApocalypseCalculator",
+  "contributors": [
+    "ApocalypseCalculator",
+    "ji-mmyliu"
+  ],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ApocalypseCalculator/Feck/issues"
+  },
+  "homepage": "https://github.com/ApocalypseCalculator/Feck#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
