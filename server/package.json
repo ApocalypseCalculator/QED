@@ -17,9 +17,9 @@
   ],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/ApocalypseCalculator/Feck/issues"
+    "url": "https://github.com/ApocalypseCalculator/QED/issues"
   },
-  "homepage": "https://github.com/ApocalypseCalculator/Feck#readme",
+  "homepage": "https://github.com/ApocalypseCalculator/QED#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
