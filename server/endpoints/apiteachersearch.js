@@ -17,7 +17,6 @@ module.exports.execute = async function (req, res, next, clients) {
             if (sprofsearch.topics.length != 0) {
                 // this is inefficient but there isn't much time to implement something more efficient /shrug
                 let resultlist = await clients.repositories.tprofile.search().return.all(); //.where('topicname').containsOneOf(sprofsearch.topics) throws error
-                //console.log(resultlist);
                 res.json(sortresult(resultlist, sprofsearch.topics, user));
             }
             else {
@@ -36,6 +35,7 @@ module.exports.execute = async function (req, res, next, clients) {
 function sortresult(list, topics, user) {
     for (let i = 0; i < list.length; i++) {
         list[i].score = buildscore(list[i], topics, user);
+        //console.log(list[i]);
     }
     list.sort((a, b) => a.score - b.score);
     return list.filter(e => (e.score != 0));
@@ -48,7 +48,7 @@ function buildscore(tprofile, topics, user) {
     }
     let matchedlist = [];
     //first passthrough
-    for (let i = 0; i < topics; i++) {
+    for (let i = 0; i < topics.length; i++) {
         let tmplist = tprofile.topics.filter(e => (e.name === topics[i]));
         if (tmplist[0] && tmplist[0].skill) {
             matchedlist.push(tmplist[0]);
@@ -60,11 +60,11 @@ function buildscore(tprofile, topics, user) {
         initscore = 0; //this should not happen
     }
     else {
-        for (let i = matchedlist - 1; i >= 0; i--) {
-            if (i < matchedlist - 2 && matchedlist[i] < 5) {
+        for (let i = matchedlist.length - 1; i >= 0; i--) {
+            if (i < matchedlist.length - 2 && matchedlist[i].skill < 5) {
                 break; //ignore all possible skills if 3 considered and this skill level is below 5
             }
-            initscore *= (1 + (((matchedlist[i] - 7) / 10) * Math.pow(0.5, i)));
+            initscore *= (1 + (((matchedlist[i].skill - 7) / 10) * Math.pow(0.5, matchedlist.length - i - 1)));
         }
     }
     return parseInt(initscore);
