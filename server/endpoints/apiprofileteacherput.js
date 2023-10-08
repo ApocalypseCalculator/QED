@@ -14,7 +14,7 @@ module.exports.execute = async function (req, res, next, clients) {
             let filteredtopics = [];
             if (req.body.topics && Array.isArray(req.body.topics)) {
                 req.body.topics.forEach(e => {
-                    if (e.name && e.name.length < 32 && Number.isInteger(e.skill) && e.skill > 0 && e.skill < 11) {
+                    if (e.name && typeof e.name == "string" && e.name.length < 32 && Number.isInteger(e.skill) && e.skill > 0 && e.skill < 11) {
                         filteredtopics.push({
                             name: e.name,
                             skill: e.skill
