@@ -37,16 +37,8 @@ module.exports.execute = async function (req, res, next, clients) {
                 }).catch(() => res.status(500).json({ error: "Internal server error" }));
             }
             else { //decline aka delete the request
-                sprofsearch.ongoing.filter(e => {
-                    if (e.starttime == 0 || e.target == user.userid) {
-                        return e;
-                    }
-                });
-                tprofsearch.ongoing.filter(e => {
-                    if (e.starttime == 0 || e.target == req.body.target) {
-                        return e;
-                    }
-                });
+                sprofsearch = sprofsearch.ongoing.filter(e => (e.starttime != 0 || e.target != user.userid));
+                tprofsearch = tprofsearch.ongoing.filter(e => (e.starttime != 0 || e.target != req.body.target));
                 clients.repositories.sprofile.save(sprofsearch).then((newsprofile) => {
                     clients.repositories.tprofile.save(tprofsearch).then((newtprofile) => {
                         res.json({
