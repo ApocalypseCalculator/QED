@@ -72,7 +72,7 @@ export const LearnerUpdate = (): JSX.Element => {
             nav("/learner");
             session.notify("Successfully saved your profile!", "success");
         }).catch((err) => {
-            console.error("Error put student:", err);
+            session.notify(`Error: ${err.response.data.error}`, "error");
         });
     }
 

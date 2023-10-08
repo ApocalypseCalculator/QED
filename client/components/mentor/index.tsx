@@ -12,6 +12,7 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import { LearnerProfile } from "../../util/models";
 import { StudentResult } from "./studentResult";
 import Routes from "../../util/routes/routes";
+import { Session, SessionContext } from "../../util/session";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -23,14 +24,14 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export const MentorHome = (): JSX.Element => {
     const nav: NavigateFunction = useNavigate();
+    const session: Session = React.useContext(SessionContext);
     const [interestedStudents, setInterestedStudents] = React.useState<Array<LearnerProfile>>([]);
 
     React.useEffect(() => {
         axios.get(`${Routes.TEACHER.GET}?self=true`).then((res) => {
-            // setInterestedStudents()
             console.log("Success get teacher:", res.data);
         }).catch((err) => {
-            console.error("Error get teacher:", err);
+            session.notify(`Error: ${err.response.data.error}`, "error");
         });
     }, []);
 

@@ -70,7 +70,7 @@ export const MentorUpdate = (): JSX.Element => {
             nav("/mentor");
         }).catch((err) => {
             console.error("Error put teacher:", err);
-            session.notify("An error occurred while saving your profile", "error");
+            session.notify(`Error: ${err.response.data.error}`, "error");
         });
         setInterestedTopics([...interestedTopics]);
     }

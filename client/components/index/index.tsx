@@ -34,7 +34,7 @@ const _App = (): React.JSX.Element => {
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
             </Routes>
-            <Snackbar open={!!session.message} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar open={!!session.message} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
                 <Alert onClose={handleClose} severity={session.type} sx={{ mt: "1.5em", width: '100%' }}>{session.message}</Alert>
             </Snackbar>
         </ThemeProvider>

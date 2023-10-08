@@ -35,7 +35,7 @@ export const LearnerHome = (): JSX.Element => {
             console.log("Success search teachers:", res.data);
             setMentorResults(res.data);
         }).catch((err) => {
-            console.error("Error search teachers:", err);
+            session.notify(`Error: ${err.response.data.error}`, "error");
         })
     }, []);
 

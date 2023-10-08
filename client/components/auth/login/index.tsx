@@ -65,8 +65,10 @@ export const Login = (): JSX.Element => {
 
             nav('/learner');
             session.notify("Successfully logged in!", "success");
+            axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+
         }).catch((err) => {
-            console.error("Error occurred while logging in:", err);
+            session.notify(`Error: ${err.response.data.error}`, "error");
         });
     }
 
