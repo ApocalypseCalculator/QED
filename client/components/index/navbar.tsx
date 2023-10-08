@@ -36,6 +36,9 @@ export default function ButtonAppBar() {
                                 <Link to="/" style={{ textDecoration: "none", color: "yellow" }}>QED</Link>
                             </Typography>
                             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                                <a href="/#about" style={{ textDecoration: "none", color: "white" }}>About</a>
+                            </Typography>
+                            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                                 <Link to="/learner" style={{ textDecoration: "none", color: "white" }}>Learner Home</Link>
                             </Typography>
                             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

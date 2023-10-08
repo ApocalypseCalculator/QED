@@ -66,11 +66,11 @@ export const Home = (): JSX.Element => {
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Item sx={{ padding: "2em" }}>
-                            <Typography variant="h2">
+                            <Typography variant="h2" id="about">
                                 Who are we?
                             </Typography>
                             <Typography variant="h6">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus ornare suspendisse sed nisi lacus sed. Ipsum a arcu cursus vitae congue mauris rhoncus. Pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Leo a diam sollicitudin tempor id eu nisl nunc. Nisi porta lorem mollis aliquam ut. Aliquet bibendum enim facilisis gravida. Lobortis scelerisque fermentum dui faucibus. Turpis in eu mi bibendum neque egestas congue quisque egestas. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Dignissim sodales ut eu sem integer vitae. Sed arcu non odio euismod lacinia at quis risus sed. Eu volutpat odio facilisis mauris sit. Iaculis eu non diam phasellus vestibulum lorem.
+                                On this platform, anyone could create a learner and/or a mentor profile. For each subject a mentor wishes to help someone in, they can rate their own skill. Learners will then get a generated list of mentors who match their criteria (e.g. location, proficiency, etc), which they can then choose mentors from and send requests to the mentors. Mentors will have a feed of these requests to work with. Initial arrangements (including possible compensation) can be done through the platform via a text chat, and they can further communicate using text, video, or meet up in person.
                             </Typography>
                         </Item>
                     </Grid>
