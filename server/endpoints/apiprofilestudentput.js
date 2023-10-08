@@ -14,8 +14,8 @@ module.exports.execute = async function (req, res, next, clients) {
             let filteredtopics = [];
             if (req.body.topics && Array.isArray(req.body.topics)) {
                 req.body.topics.forEach(e => {
-                    if (e.name && e.name.length < 32) {
-                        filteredtopics.push(e.name);
+                    if (e && typeof e == 'string' && e.length < 32) {
+                        filteredtopics.push(e);
                     }
                 });
             }
@@ -23,7 +23,7 @@ module.exports.execute = async function (req, res, next, clients) {
                 sprofsearch.bio = req.body.bio;
                 sprofsearch.topics = filteredtopics;
             }
-            clients.repositories.tprofile.save(user.userid, (sprofsearch && sprofsearch.bio) ?
+            clients.repositories.sprofile.save(user.userid, (sprofsearch && sprofsearch.bio) ?
                 sprofsearch : {
                     bio: req.body.bio,
                     topics: filteredtopics
