@@ -16,6 +16,9 @@ module.exports.execute = async function (req, res, next, clients) {
                 if (tprofsearch.topics.filter(e => (e.name === req.body.topic)).length == 0) {
                     return res.status(403).send({ status: 403, error: "This mentor does not teach this topic" });
                 }
+                else if (tprofsearch.ongoing.filter(e => (e.target === user.userid && e.starttime == 0)).length != 0) {
+                    return res.status(401).send({ status: 401, error: "You already have a pending request" });
+                }
                 else if (sprofsearch && sprofsearch.bio) {
                     //if an "ongoing" object's start time is 0, then it is a request
                     let ongoingobj = {
