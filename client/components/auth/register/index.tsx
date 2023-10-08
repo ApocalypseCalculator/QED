@@ -43,7 +43,7 @@ export const Register = (): JSX.Element => {
             console.log("Success register:", res.data);
             nav('/login');
         }).catch((err) => {
-            console.log("Error register:", err);
+            session.notify(`Error: ${err.response.data.error}`, "error");
         });
     }
 

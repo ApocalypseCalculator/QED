@@ -10,12 +10,12 @@ import { Alert, AlertColor, Autocomplete, Button, Slider, Snackbar, TextField, T
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 
 import { MentorProfileUpdate } from "./update";
-import { learnableTopics } from "../../../../util/misc/topics";
-import { MentorProfile, MentorProfileInputs, Teachable } from "../../../../util/models";
+import { learnableTopics } from "../../../util/misc/topics";
+import { MentorProfile, MentorProfileInputs, Teachable } from "../../../util/models";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { Session, SessionContext } from "../../../../util/session";
-import Routes from "../../../../util/routes/routes";
+import { Session, SessionContext } from "../../../util/session";
+import Routes from "../../../util/routes/routes";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -70,7 +70,7 @@ export const MentorUpdate = (): JSX.Element => {
             nav("/mentor");
         }).catch((err) => {
             console.error("Error put teacher:", err);
-            session.notify("An error occurred while saving your profile", "error");
+            session.notify(`Error: ${err.response.data.error}`, "error");
         });
         setInterestedTopics([...interestedTopics]);
     }

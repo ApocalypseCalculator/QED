@@ -2,8 +2,8 @@ import { default as axios } from "axios";
 
 import { Box, Button, Typography } from "@mui/material";
 import * as React from "react";
-import { LearnerProfile } from "../../../../util/models";
-import Routes from "../../../../util/routes/routes";
+import { LearnerProfile } from "../../../util/models";
+import Routes from "../../../util/routes/routes";
 
 export const StudentResult = ({ profile, topic }: { profile: LearnerProfile, topic: string }): JSX.Element => {
     return (

@@ -35,7 +35,7 @@ export const LearnerHome = (): JSX.Element => {
             console.log("Success search teachers:", res.data);
             setMentorResults(res.data);
         }).catch((err) => {
-            console.error("Error search teachers:", err);
+            session.notify(`Error: ${err.response.data.error}`, "error");
         })
     }, []);
 
@@ -60,14 +60,17 @@ export const LearnerHome = (): JSX.Element => {
                                 <Typography variant="h6">No available mentors yet, check back in a bit!</Typography>}
 
                             {mentorResults.map((profile: MentorProfile, idx: number): JSX.Element => {
-                                return <MentorResult profile={profile} key={idx} />;
+                                return <MentorResult profile={profile} key={idx} ongoing={false} />;
                             })}
                         </Item>
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <Item sx={{ padding: "2em" }}>
-                            <Typography variant="h5">No Ongoing Mentorships Yet.</Typography>
-                            {/* <Typography variant="h5">Ongoing Mentorships:</Typography> */}
+                            {mentorResults.length > 0 ? <Typography variant="h5">Ongoing Mentorships:</Typography> :
+                                <Typography variant="h5">No Ongoing Mentorships Yet.</Typography>}
+                            {mentorResults.map((profile: MentorProfile, idx: number): JSX.Element => {
+                                return <MentorResult profile={profile} key={idx} ongoing={true} />;
+                            })}
                         </Item>
                     </Grid>
                 </Grid>
