@@ -22,7 +22,7 @@ schemas.user = new Schema('user', {
     age: { type: 'number' },
     location: {type: 'string'},
     password: { type: 'string' },
-    registertime: { type: 'date' }
+    registertime: { type: 'number' }
 }, {
     dataStructure: "JSON"
 });
