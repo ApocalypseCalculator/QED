@@ -12,7 +12,7 @@ const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
     padding: theme.spacing(1),
-    textAlign: 'center',
+    textAlign: 'left',
     color: theme.palette.text.secondary,
 }));
 
@@ -37,7 +37,7 @@ export const Home = (): JSX.Element => {
                 </Grid>
             </Box> */}
             {/* <Box sx={{backgroundColor: "lightpurple"}}> */}
-            <div className="jumbotron" style={{padding: "1em"}}>
+            <div className="jumbotron" style={{ margin: "1.5em", paddingLeft: "1em", paddingTop: "1em", backgroundImage: "url('/static/img/learning-1-blurred.jpg')", height: "1000px", backgroundRepeat: "no-repeat" }}>
                 <h2 className="display-4">Wanna learn something?</h2>
                 <h1 className="display-1">Meet <strong>QED</strong></h1>
                 <h2 className="display-3"><em>It's already been proven.</em></h2>
@@ -49,13 +49,28 @@ export const Home = (): JSX.Element => {
                     <a className="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
                 </p> */}
 
-                <img src="/static/img/learning-1.jpg" width="90%" style={{margin: "1em"}}></img>
-                <Button 
-                    variant="contained" 
-                    sx={{marginTop: "2em", marginBottom: "2em"}} 
+                {/* <img src="/static/img/learning-1.jpg" width="90%" style={{ margin: "1em" }}></img> */}
+                <Button
+                    variant="contained"
+                    sx={{ marginTop: "2em" }}
                     onClick={() => nav("/register")}
                 >Get started now!</Button>
             </div>
+
+            <Box sx={{ flexGrow: 1, margin: "1.5em" }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Item sx={{ padding: "2em" }}>
+                            <Typography variant="h2">
+                                Who are we?
+                            </Typography>
+                            <Typography variant="h6">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Faucibus ornare suspendisse sed nisi lacus sed. Ipsum a arcu cursus vitae congue mauris rhoncus. Pellentesque elit ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Leo a diam sollicitudin tempor id eu nisl nunc. Nisi porta lorem mollis aliquam ut. Aliquet bibendum enim facilisis gravida. Lobortis scelerisque fermentum dui faucibus. Turpis in eu mi bibendum neque egestas congue quisque egestas. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Dignissim sodales ut eu sem integer vitae. Sed arcu non odio euismod lacinia at quis risus sed. Eu volutpat odio facilisis mauris sit. Iaculis eu non diam phasellus vestibulum lorem.
+                            </Typography>
+                        </Item>
+                    </Grid>
+                </Grid>
+            </Box>
             {/* </Box> */}
         </>
     );
