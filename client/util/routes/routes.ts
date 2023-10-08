@@ -1,4 +1,4 @@
-let BASEURL = "http://10.76.0.16:8080"
+let BASEURL = "/"
 let Routes = {
     AUTH: {
         LOGIN: `${BASEURL}/api/login`,
