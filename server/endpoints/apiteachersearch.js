@@ -49,7 +49,9 @@ module.exports.execute = async function (req, res, next, clients) {
 
 function sortresult(list, topics, user) {
     for (let i = 0; i < list.length; i++) {
-        list[i].score = buildscore(list[i], topics, user);
+        let [score, scoretarget] = buildscore(list[i], topics, user);
+        list[i].score = score;
+        list[i].recommended = scoretarget ? scoretarget.name : '';
         //console.log(list[i]);
     }
     list.sort((a, b) => a.score - b.score);
@@ -70,7 +72,7 @@ function buildscore(tprofile, topics, user) {
         }
     }
     //second passthrough
-    matchedlist.sort((a, b) => a - b);
+    matchedlist.sort((a, b) => (a.skill - b.skill));
     if (matchedlist.length == 0) {
         initscore = 0; //this should not happen
     }
@@ -82,5 +84,5 @@ function buildscore(tprofile, topics, user) {
             initscore *= (1 + (((matchedlist[i].skill - 7) / 10) * Math.pow(0.5, matchedlist.length - i - 1)));
         }
     }
-    return parseInt(initscore);
+    return [parseInt(initscore), matchedlist[matchedlist.length - 1]];
 }
