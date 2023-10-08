@@ -5,9 +5,11 @@ const fs = require('fs');
 const config = require('./config');
 const path = require('path');
 const redis = require('./lib/redis');
+const cors = require('cors');
 
 const app = express();
 
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ strict: true }));
 app.enable('trust proxy');
