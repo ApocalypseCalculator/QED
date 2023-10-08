@@ -15,25 +15,26 @@ const getProficiency = (profile: MentorProfile, topic: string): number => {
     return result;
 }
 
-export const MentorResult = ({ profile }: { profile: MentorProfile }): JSX.Element => {
-    return (
+export const MentorResult = ({ profile, ongoing }: { profile: MentorProfile, ongoing: boolean }): JSX.Element => {
+    return (ongoing !== ("ongoing" in profile && profile.ongoing.starttime === 0)) ? (
         <Box sx={{ backgroundColor: "lightgray", margin: "1em", padding: "1em" }}>
             <Typography variant="h5"><strong>{`${profile.firstname} ${profile.lastname}`}</strong></Typography>
             {profile.topics.map((topic: Teachable, idx: number): JSX.Element => {
                 return <Typography variant="h6" key={idx}>Proficiency at teaching {topic.name}: <strong>{topic.skill}/10</strong></Typography>;
             })}
             <Typography variant="body1">User biography: {profile.bio}</Typography>
-            <Button variant="contained" sx={{ mt: "0.75rem" }} onClick={(ev) => {
+            {(!ongoing) && <Button variant="contained" sx={{ mt: "0.75rem" }} onClick={(ev) => {
                 ev.preventDefault();
                 axios.post(Routes.TEACHER.REQUEST, {
                     target: profile.userid,
-                    topic: "Robotics"
+                    topic: profile.recommended
                 }).then((res) => {
                     console.log("Successfully requested:", res.data);
                 }).catch((err) => {
                     console.error("Error requesting:", err);
                 });
-            }}>Request Mentorship!</Button>
+            }}>Request Mentorship!</Button>}
+            {/* {ongoing && <Typography variant="body1">Start date: {new Date(profile.ongoing.starttime).toDateString()}</Typography>} */}
         </Box>
-    );
+    ) : <></>;
 }

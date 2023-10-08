@@ -32,6 +32,13 @@ export type MentorProfile = User & {
     bio: string;
     topics: Array<Teachable>;
     userid: string;
+    recommended: string;
+    ongoing: {
+        paid: boolean;
+        starttime: number;
+        target: string;
+        topic: string;
+    }
 }
 
 export type Teachable = {

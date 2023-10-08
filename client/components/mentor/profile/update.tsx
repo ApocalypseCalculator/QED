@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Box, Button, InputAdornment, TextField, Typography } from "@mui/material"
-import { LearnerProfileInputs, MentorProfile } from "../../../../util/models"
+import { LearnerProfileInputs, MentorProfile } from "../../../util/models"
 import { useForm, SubmitHandler, UseFormRegister } from "react-hook-form";
 import { AccountCircle, Face } from "@mui/icons-material";
 

@@ -9,8 +9,9 @@ import { Button, Typography } from "@mui/material";
 
 import SchoolIcon from '@mui/icons-material/School';
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { LearnerProfile } from "../../../util/models";
+import { LearnerProfile } from "../../util/models";
 import { StudentResult } from "./studentResult";
+import Routes from "../../util/routes/routes";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -23,6 +24,15 @@ const Item = styled(Paper)(({ theme }) => ({
 export const MentorHome = (): JSX.Element => {
     const nav: NavigateFunction = useNavigate();
     const [interestedStudents, setInterestedStudents] = React.useState<Array<LearnerProfile>>([]);
+
+    React.useEffect(() => {
+        axios.get(`${Routes.TEACHER.GET}?self=true`).then((res) => {
+            // setInterestedStudents()
+            console.log("Success get teacher:", res.data);
+        }).catch((err) => {
+            console.error("Error get teacher:", err);
+        });
+    }, []);
 
     return (
         <>
@@ -54,6 +64,9 @@ export const MentorHome = (): JSX.Element => {
                         <Item sx={{ padding: "2em" }}>
                             <Typography variant="h5">No Ongoing Mentorships Yet.</Typography>
                             {/* <Typography variant="h5">Ongoing Mentorships:</Typography> */}
+                            {interestedStudents.map((profile: LearnerProfile): JSX.Element => {
+                                return <StudentResult profile={profile} topic="" />;
+                            })}
                         </Item>
                     </Grid>
                 </Grid>

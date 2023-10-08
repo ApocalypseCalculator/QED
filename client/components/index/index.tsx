@@ -9,8 +9,8 @@ import { Register } from "../auth/register";
 import { Login } from "../auth/login";
 import { LearnerUpdate } from "../learner/profile";
 import { LearnerHome } from "../learner";
-import { MentorHome } from "../auth/mentor";
-import { MentorUpdate } from "../auth/mentor/profile";
+import { MentorHome } from "../mentor";
+import { MentorUpdate } from "../mentor/profile";
 import { Session, SessionContext, SessionProvider } from "../../util/session";
 import { LoginRequired } from "../../util/misc/loginRequired";
 
