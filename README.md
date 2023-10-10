@@ -2,7 +2,7 @@
 
 QED is a platform for any curious learners to find a skilled person to teach them, either as volunteering or for a price. 
 
-This is a Proof of Concept project made for The GoldenHack 2023. It implements most of the core functionality. 
+This is a Proof of Concept project made for The GoldenHack 2023, which you can check out [here](https://qed.patricklin.dev/)!. It implements most of the core functionality. 
 
 ## Technologies Used
 
